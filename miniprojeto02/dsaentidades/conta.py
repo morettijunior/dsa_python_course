@@ -16,7 +16,7 @@ class Conta(ABC):
 
     @property
     def saldo(self):
-        return self.saldo
+        return self._saldo
 
     @classmethod
     def get_total_contas(cls):
@@ -41,10 +41,10 @@ class Conta(ABC):
         print(f"Saldo atual: R${self._saldo:.2f}")
         print("Histórico de transações:")
 
-        if not self._historico:
+        if not self.historico:
             print("Nenhuma transação registrada.")
 
-        for data, transacao in self._historico:
+        for data, transacao in self.historico:
             print(f"- {data.strftime('%d%m%Y %H:%M:%S')}: {transacao}")
         print("---------------------------\n")
 
@@ -64,7 +64,7 @@ class ContaCorrente(Conta):
 
         self._saldo -= valor
 
-        self._historico.append((datetime.now(), f"Saque de R${valor:.2f}"))
+        self.historico.append((datetime.now(), f"Saque de R${valor:.2f}"))
         print(f"Saque de R${valor:.2f} realizado com sucesso.")
 
 class ContaPoupanca(Conta):
